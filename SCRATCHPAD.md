@@ -2,7 +2,50 @@
 
 Living state. Updated as work happens, not at the end.
 
-## Last finished — KnickKnackLabs/shimmer, `whoami` on unset `GH_TOKEN`
+## Last finished — KnickKnackLabs/modules, empty manifest is stat-dirty
+
+`modules setup` wrote `.modules/manifest` as zero bytes (`: > "$MANIFEST"`,
+`setup:47`), and a zero-byte worktree file whose git-crypt blob is not the
+empty blob is stat-dirty forever — `git stash create` exits 1 and every
+`git merge --no-ff` in `~/oikos` died `fatal: stash failed`. Diagnosed by
+knick in [[household-backlog]]; assigned in [[work-queue]]; shipped as
+https://github.com/KnickKnackLabs/modules/pull/61 on 2026-09-13.
+
+- Branch `knack/non-empty-manifest` on `knack-oikos/modules`, commit `98e2f1c`,
+  signed `G` with key `08D080CEE3860BA2`, cut fresh from `upstream/main`
+  (`460d409`). Fork created this session. Pushed; `headRefOid` verified, 0
+  unpushed. Queue update on `~/oikos` branch `knack/queue-non-empty-manifest`
+  (`14c17ce`), fast-forwardable onto `main` (`faef528`), not merged — owner's.
+- Three writers could emit zero bytes: `setup`, `manifest_remove` on the last
+  entry, and the merge driver's success path. One `manifest_normalize` now
+  serves every writer and emits a single newline when nothing remains; every
+  reader already skipped blank lines, so no reader changed.
+- Reproduced with the real thing, not the filter-only shape: `modules setup`
+  git-crypts the manifest itself via `rudi init --no-user`, so a throwaway
+  repo plus `git merge --no-ff` is the whole reproduction. Pristine: exit 128.
+  Fixed: exit 0.
+- Four tests fail on pristine, checked in a detached worktree at `460d409`
+  with the test files copied in, removed in the same chain. The gpg roundtrip
+  tests skip by default; `TEST_GPG_FINGERPRINT=<my key>` runs them for real.
+- `codebase lint` fails two rules on modules at `460d409` already
+  (`process-substitution-status`, `remote-url-output`); measured on pristine,
+  not asserted. `readme build --check` fails on any test-count change; run
+  `readme build` and commit `README.md`.
+- **`~/agents/knack/.gitconfig` says `email = knack@oikos.local`.** A commit
+  from a shell that never sourced `agent:env` lands signed but as
+  `knack@oikos.local`, which is not the key's UID and not the mail identity.
+  Caught before push; re-authored with `agent:env` sourced. The Pending item
+  in AGENTS.md claiming `G knack <knack@stauros.family>` was wrong and is
+  corrected in this commit. Whether to change the file is the owner's —
+  identity config.
+- Ran `shimmer as knack` unwrapped once while building the activation
+  preamble; the PAT went into the transcript. Same defect knick filed
+  2026-09-09. Reported to the owner; rotation is theirs.
+- `KnickKnackLabs/notes` initializes `notes/.manifest` with `touch` at its
+  `setup:141` — same shape, not biting `~/oikos` (that file is 376 bytes).
+  Not opened; knick's to file.
+
+## Before that — KnickKnackLabs/shimmer, `whoami` on unset `GH_TOKEN`
 
 `.mise/tasks/whoami` ran `set -euo pipefail` at `:3` and then tested
 `if [ -n "$GH_TOKEN" ]` at `:10`, so with the variable unset `set -u` aborted at

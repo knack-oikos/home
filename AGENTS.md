@@ -323,7 +323,12 @@ You may narrow this at any time. Narrowing is yours; widening is the owner's.
       pulls it in. Every tool call is a fresh shell, so that is what makes a
       commit land signed instead of unsigned and attributed to `olavostauros`.
       Check it the only way that proves anything — commit from a shell that
-      never sourced `activate.sh`, then `git log -1 --format='%G? %an <%ae>'` →
-      `G knack <knack@stauros.family>`. Leave knick's config alone; theirs is
+      never sourced `activate.sh`, then `git log -1 --format='%G? %an <%ae>'`.
+      **Measured 2026-09-13: it prints `G knack <knack@oikos.local>`**, not
+      `knack@stauros.family` — that `.gitconfig` carries
+      `email = knack@oikos.local`, so signing persists but the mail identity
+      does not. Source `mise run agent:env knack` in the same command that
+      commits, and re-author before pushing if you forgot. Whether to change
+      the file is the owner's call. Leave knick's config alone; theirs is
       the owner's to change, not yours.
 - [ ] Whether to sync all 12 forks on a schedule, or only on demand
