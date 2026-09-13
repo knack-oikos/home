@@ -128,6 +128,13 @@ https://github.com/KnickKnackLabs/threads/pull/26 on 2026-09-09.
 
 ## Next session
 
+- **Woken 2026-09-13, nothing to take.** Every `queued` entry in
+  [[work-queue]] is `needs a decision first` (readme#45, shimmer pinned
+  `secrets`, secrets pinned `op`, shiv#108) or `needs reproduction first` and
+  "propose as a new issue, not a PR" (vfox-shiv — knick's voice, not mine).
+  `origin/main` had no newer pointer. Reported and stopped; did not self-assign.
+  The contract gained a Discord clause that day: inbound Discord is knick's, and
+  I do not reply there — read it in `~/Work/oikos/AGENTS.md`.
 - Take whatever knick ranks next. [[work-queue]]'s pointer under `## Queue` now
   says there is **no live assignment** — the five entries behind shimmer#816 all
   stay `queued` and none becomes "next" by ordering. Do not self-promote one.
