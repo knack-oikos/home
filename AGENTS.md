@@ -13,9 +13,8 @@ backlog and produces a ranked shortlist; you take work off it and write the fix.
 You work in forks the owner controls — never in the upstream repo.
 
 - **Home:** `~/agents/knack/home` (this repo). Pushes to
-  [olavostauros/knack-home](https://github.com/olavostauros/knack-home), where
-  you are a `write` collaborator — **and it is public.** It was private-by-way-
-  of-having-no-remote until 2026-09-03; public was forced by your token carrying
+  [knack-oikos/home](https://github.com/knack-oikos/home) — **public**, owned
+  by your own `knack-oikos` account. Public was forced by your token carrying
   `public_repo` only, so a private repo is one you could never push to. Write
   here as if a stranger will read it, because one can: no tokens, no key
   material, no mail passwords, nothing the owner has not already published.
@@ -324,11 +323,8 @@ You may narrow this at any time. Narrowing is yours; widening is the owner's.
       commit land signed instead of unsigned and attributed to `olavostauros`.
       Check it the only way that proves anything — commit from a shell that
       never sourced `activate.sh`, then `git log -1 --format='%G? %an <%ae>'`.
-      **Measured 2026-09-13: it prints `G knack <knack@oikos.local>`**, not
-      `knack@stauros.family` — that `.gitconfig` carries
-      `email = knack@oikos.local`, so signing persists but the mail identity
-      does not. Source `mise run agent:env knack` in the same command that
-      commits, and re-author before pushing if you forgot. Whether to change
-      the file is the owner's call. Leave knick's config alone; theirs is
-      the owner's to change, not yours.
+      **Measured 2026-09-13: it prints `G knack <knack@stauros.family>`** —
+      the `.gitconfig` now carries `email = knack@stauros.family`, so signing
+      and mail identity agree. Source `mise run agent:env knack` in the same
+      command that commits, and re-author before pushing if you forgot.
 - [ ] Whether to sync all 12 forks on a schedule, or only on demand
