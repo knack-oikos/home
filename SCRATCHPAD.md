@@ -2,6 +2,90 @@
 
 Living state. Updated as work happens, not at the end.
 
+## In flight — per-agent password manager, implementation-side feasibility
+
+Woken 2026-09-16 through a coordinator session relaying the owner's ask ("each
+agent its own password manager"). knick designs and files the Tier-2 entry; my
+job was to measure what `secrets` can express and prototype isolation without
+touching any live path. Nothing here is a decision. Authority is
+`~/Work/oikos/AGENTS.md`.
+
+- **Branch `knack/libsecret-collection` on `knack-oikos/secrets`, commit
+  `8387aff`, signed `G`, held unpushed.** Cut from `knack/local` (`ec13dab`)
+  because the libsecret provider exists on no other branch; it is a prototype,
+  not a PR base, and an upstream PR would need the provider first. Worked in a
+  separate clone `~/agents/knack/secrets-collection`; the live clone never
+  left `knack/local`. Adds `SECRETS_LIBSECRET_COLLECTION`: `libsecret_set`
+  passes it as `secret-tool store --collection=`, empty by default. Five
+  tests; libsecret suite 39/39; full suite 165 with the same 8 failing by
+  name as on the untouched base. README regenerated with `shiv:readme@0.3.4`
+  (the base already lagged, 155 vs 160).
+- **Unpushed because activation failed.** `secrets get knack/github-pat`
+  found no entry under `libsecret`, `shimmer as knack` aborted, and the
+  `gh api user` I had chained after it printed the owner's login. Ran no
+  `gh` after that. Pushing over https would ride the owner's credential
+  helper, so the commit is held. Same class as the oikos#1 slip below; the
+  gate has to come *before* anything that talks to GitHub.
+- **1Password needs no code.** `lib/1password.sh:21` already reads
+  `SECRETS_1PASSWORD_VAULT` (default `Agents`) and passes `--vault` on every
+  call (`:53`, `:116`, `:130`, `:159`, `:234`); verified by pointing it at a
+  vault that does not exist and reading op's rejection. What is missing is
+  `agent:env` exporting it per agent — an oikos change, not a `secrets` one.
+  The account is `INDIVIDUAL`: one user, every vault visible to every `op`
+  call the desktop app authorizes, so a per-agent vault is a namespace, not a
+  boundary. Service accounts (`OP_SERVICE_ACCOUNT_TOKEN`, the unattended
+  path) need a Teams/Business plan.
+- **libsecret collections are not a read namespace.** `secret-tool store`
+  takes `--collection`; `lookup`, `search` and `clear` do not, and search
+  every unlocked collection. The `service` attribute (`secrets/<agent>/<key>`)
+  is the only namespace, and any process on the session bus can query any
+  attribute. Isolation would come from the *lock*, not the name.
+- **No headless way to create or unlock a collection through the API.**
+  `CreateCollection` returns a prompt object and nothing else; completing it
+  needs `gcr-prompter` and a human. Completing it with an empty window id and
+  no prompter registered crashed my throwaway daemon (SIGSEGV 12:54:23,
+  use-after-free in dispatch per the coredump; Omarchy opened a crash-diagnosis
+  session about it). `secret-tool` has no `create` or `unlock` verb at all.
+- **The control socket is the only unattended path, and it is per daemon.**
+  `gnome-keyring-daemon --login`/`--unlock` take a password on stdin and act
+  on that daemon's `login` keyring. Measured in an isolated daemon on a
+  private bus (`XDG_DATA_HOME` in scratch): first `--unlock` created and
+  unlocked `login`; store, lookup and `secret-tool lock --collection=login`
+  all worked. Re-unlocking after a lock, and restarting with the same
+  password, left `login` reporting `Locked=true` in every attempt — not
+  demonstrated, not proven impossible; the runs were noisy with extra daemons
+  and I stopped. So "own collection, unlocked unattended" collapses into "own
+  `gnome-keyring-daemon` on its own session bus per agent", with the password
+  read from somewhere the agent can reach, which is a file.
+- **A keyring created without a password is plaintext on disk**, and the
+  daemon auto-creates one silently when a store arrives with no default
+  collection. That file is the `[keyring]` text format and every value is
+  readable with `grep`. Lookup against it needs no unlock and no prompt.
+- **`secret-tool store --collection=<bad-name>` hangs** when the name is
+  not `[A-Za-z0-9_]+` (invalid D-Bus path element, libsecret assertion, then
+  a wait forever). A valid name for a missing collection fails fast with
+  `Object does not exist at path /org/freedesktop/secrets/aliases/<name>`.
+  The provider change guards the first case. libsecret 0.21.7, gnome-keyring
+  50.0.
+- **What I touched outside my space, all reverted or transient:** an item
+  `secrets/proto/x` in the in-memory `session` collection (cleared), and
+  once, by resolving the alias `default`, an item `secrets/proto/y` in the
+  live default keyring (cleared the same command; the four existing entries
+  are intact; the file was rewritten). A `pkill -f` pattern of mine matched
+  Omarchy's diagnose-crash terminal by its prompt text and killed it. Never
+  kill by command-line text again; match `/proc/<pid>/exe`.
+- Pre-existing, proven not asserted: 8 `secrets` tests fail on this machine
+  because `~/.config/mise/config.toml:27` exports `SECRETS_PROVIDER=libsecret`
+  into every `mise run`, and the tests' `unset` cannot reach through the
+  `secrets()` helper's re-entry into mise. Same shape as the `chat_send.bats`
+  case below. Filed in [[mise-gotchas]].
+- Two worktrees from earlier sessions still hold branches beside the live
+  clone (`secrets-provider-bats-110`, `secrets-secrets-provider-env`). Not
+  removed this session; they predate it.
+- Blocked on the owner: knick's proposal, and whether the libsecret store on
+  this machine is repaired or replaced. The machine-specific keyring finding
+  went to the owner in the session report, not into this public file.
+
 ## Last finished — olavostauros/oikos, `welcome` kept YAML quotes on `github_login`
 
 `oikos_welcome_resident_metadata` split frontmatter with bare awk, so the
