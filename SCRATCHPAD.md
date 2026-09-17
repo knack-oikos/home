@@ -2,7 +2,47 @@
 
 Living state. Updated as work happens, not at the end.
 
-## In flight — per-agent password manager, implementation-side feasibility
+## In flight — olavostauros/house-framework#1, signing prompt with no context
+
+Owner-assigned 2026-09-17 in the owner's own turn (not knick's queue). The
+target is the owner's own repo: no KKL conventions, the owner merges. PR goes
+into `refactor/harness-agnostic-housekeeper` (`444d41b`, PR 2), not `main`.
+
+- **Branch `knack/signing-prompt-context` in `~/agents/knack/house-framework`,
+  commit `88b36ff`, signed `G` with `08D080CEE3860BA2`, held unpushed.** The
+  clone is an anonymous `git clone` of `olavostauros/house-framework` with the
+  remote renamed `upstream` and its push URL disabled; there is no `origin`
+  yet because the fork does not exist yet.
+- **Blocked on the keyring.** `secrets get knack/github-pat` says "No keyring
+  entry found"; the secret service lists only `session` and
+  `Default_5fKeyring`, no `login` collection. No fork, no push, no PR. Did not
+  use the owner's token, did not touch signing. The PR body is ready in
+  `pr-bodies/house-framework-signing-prompt.md`; next session: fork under
+  `knack-oikos`, `git remote add origin`, `push -u origin
+  knack/signing-prompt-context`, `gh pr create --repo
+  olavostauros/house-framework --base refactor/harness-agnostic-housekeeper
+  --head knack-oikos:knack/signing-prompt-context --body-file ...`, then the
+  queue entry to `pr-open`.
+- **The oikos queue entry could not be committed.** It sits as an uncommitted
+  readable edit in `~/Work/oikos/notes/work-queue.md` (state `in-progress`,
+  branch `knack/queue-house-framework-signing` exists with no commits, the
+  checkout is parked on `main`, index clean). `notes commit` died at
+  `fatal: failed to write commit object`: commits in `~/Work/oikos` are
+  signed with the owner's key `FB1D9D07E3A34BB6` (so were my earlier ones
+  there, `4144121` and `14c17ce`), and `gpg --pinentry-mode error -bsau
+  FB1D9D07E3A34BB6` returns `FAILURE sign` — the owner's passphrase is not
+  cached and no pinentry reached this session. My own key signed fine in the
+  same minute. This is issue 1 happening to me, in the house that inspired it.
+- Reproduced before fixing with a fake `gpg.program` under a signing
+  `GIT_CONFIG_GLOBAL`; the same trick, via `GIT_CONFIG_COUNT`, became the
+  test helper `signing_env`. Gates 41 → 46, seven of eight touched tests fail
+  by name on pristine `444d41b`, the eighth is a control.
+- Learned: `GIT_CONFIG_COUNT`/`GIT_CONFIG_KEY_n` is the way to inject config
+  into a suite that pins `GIT_CONFIG_GLOBAL=/dev/null`; git's openpgp signer
+  needs `\n[GNUPG:] SIG_CREATED ` on the status fd (leading newline) and a
+  signature block on stdout, which a five-line fake satisfies.
+
+## Before that — per-agent password manager, implementation-side feasibility
 
 Woken 2026-09-16 through a coordinator session relaying the owner's ask ("each
 agent its own password manager"). knick designs and files the Tier-2 entry; my
