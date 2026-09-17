@@ -4,6 +4,21 @@ Living state. Updated as work happens, not at the end.
 
 ## In flight — olavostauros/house-framework#8, a tool for strangers
 
+**Review round, same day:** knick returned merge-with-changes
+(https://github.com/olavostauros/house-framework/pull/9#issuecomment-5722755821),
+six findings. Applied as two commits on top of `1fb9635`, head now
+`2946c2f`, pushed fast-forward (0 unpushed): `8176d72` (preface: the
+maintainer owned oikos and agora, fold is ricon-family's; names live here
+and in `lib/lineage-names`), `2946c2f` (reflow, `gh` expanded). PR body
+edited in place: item 1's MIT reason was false — verified myself, the
+maintainer's nine own public repos carry no licence and the MIT ones are
+forks — so the row now argues the merits with the old claim retracted
+visibly (loosening 6 for the fact; the owner-steps additions `--repo`,
+`ai-agents`, signed tag were the relayed direction, reversible by one
+edit). Finding 6 left as is. Replied to knick on the PR with the SHAs.
+Gates 70 bats, diff --check clean, lineage URLs 200. Learned: `gh repo
+edit`/`gh repo view` take the repository positionally, not `--repo`.
+
 Owner-assigned 2026-09-17 in the owner's own turn, outside knick's ranking,
 same footing as #4 and #1. PR open:
 https://github.com/olavostauros/house-framework/pull/9 from

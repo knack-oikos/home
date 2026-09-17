@@ -2,13 +2,13 @@ Closes #8.
 
 Makes the repository itself usable by someone who lands on it from GitHub with no context: a license, a first screen that says who it is for, prerequisites, an install that needs only git and mise, a way to contribute, a contract addressed to anyone's agent, and a lineage note a stranger can read. Nothing under `templates/`, `examples/` or `.mise/tasks/{init,agent}` changes, and no test changes.
 
-Five commits, one per file group, cut from `main` at `87fd50f`.
+Seven commits, cut from `main` at `87fd50f`: five, one per file group, then two from the review round (`8176d72`, `2946c2f`) answering knick's findings 1, 3, 4 and 5 in `notes/lineage.md`.
 
 ## Definition of done, line by line
 
 | # | Line | What this PR does |
 |---|---|---|
-| 1 | `LICENSE` exists; the README names it | `LICENSE` is MIT, chosen from the maintainer's convention (every other public repo of theirs is MIT); the owner may swap it before merging. The README says it is MIT-licensed and that a house rendered from the templates belongs to whoever generated it and is not bound by the framework's license. **Holder note below.** |
+| 1 | `LICENSE` exists; the README names it | `LICENSE` is MIT, chosen on the merits: the repository is bash and markdown templates with no patent surface, and the rendered-house exception is simplest to state under a licence with no NOTICE or derivative-work handling, which Apache-2.0 would add. The owner may swap it before merging. *Retracted:* this row first said MIT was "the maintainer's convention (every other public repo of theirs is MIT)"; measured 2026-09-17, those MIT repos are forks carrying their upstream licences, and none of the maintainer's nine own public repos has a licence. The README says it is MIT-licensed and that a house rendered from the templates belongs to whoever generated it and is not bound by the framework's license. **Holder note below.** |
 | 2 | README says what and for whom before its first `##`; Prerequisites; an install with git and mise alone | New second paragraph: for anyone running a roster of agents against a repository, under any harness or none, not tied to the household that wrote it. New `## Prerequisites`: git, bash, mise; `mise install` brings bats. `## Install` now leads with `git clone` + `mise trust && mise install` + `mise run init example --at /path/to/example`, the form `.github/workflows/test.yml` uses; shiv is the optional second form. The `~/Work` path was already gone after #7; the example path is `/path/to/example`. |
 | 3 | Every link in `README.md` and `notes/lineage.md` resolves logged-out or is marked private | Table below: every URL 200 anonymously. `olavostauros/ticket` is text, not a link, and reads "a private repository with no public link". |
 | 4 | `CONTRIBUTING.md` exists; `AGENTS.md`'s first paragraph requires no house | `CONTRIBUTING.md`: open an issue first, `mise run test` and `git diff --check`, `examples --write` after a template change, conventional commits, no footers or tool attribution, read `AGENTS.md`. `AGENTS.md` opens as the contract for this repository for whoever's agent is here, under any harness or none; the lineage-in-commit rule is now "if you know, say so; if not, say it is new. Nobody is expected to know." |
@@ -57,10 +57,24 @@ Every URL extracted from `README.md` and `notes/lineage.md`, fetched anonymously
 
 ## Owner steps after merge
 
+`gh release create --target main` creates `v0.1.0` as a lightweight tag through the API, unsigned, in a repository whose commits are all signed. For a signed tag, cut it locally on the merge commit and push it first, then create the release without `--target`:
+
 ```bash
-gh release create v0.1.0 --target main --title v0.1.0 --notes "First release: house init, agent add, rules add, doctor, export claude-code, and the notes and shimmer presets. MIT-licensed; a rendered house is its generator's."
-gh repo edit --description "The starting point of a house of agents: scaffolds a household (contract, roster, queue, guard, housekeeper) and its agents, under any harness or none"
-gh repo edit --add-topic agents --add-topic mise --add-topic bash --add-topic scaffolding --add-topic agents-md
+git tag -s v0.1.0 -m v0.1.0 <merge-sha> && git push origin v0.1.0
+gh release create v0.1.0 --repo olavostauros/house-framework --title v0.1.0 --notes "First release: house init, agent add, rules add, doctor, export claude-code, and the notes and shimmer presets. MIT-licensed; a rendered house is its generator's."
 ```
 
-Then `gh repo view --json licenseInfo,description,repositoryTopics` and `gh release list` close items 1, 5 and 6.
+Or, accepting a lightweight unsigned tag, in one step:
+
+```bash
+gh release create v0.1.0 --repo olavostauros/house-framework --target main --title v0.1.0 --notes "First release: house init, agent add, rules add, doctor, export claude-code, and the notes and shimmer presets. MIT-licensed; a rendered house is its generator's."
+```
+
+Then, either way:
+
+```bash
+gh repo edit olavostauros/house-framework --description "The starting point of a house of agents: scaffolds a household (contract, roster, queue, guard, housekeeper) and its agents, under any harness or none"
+gh repo edit olavostauros/house-framework --add-topic agents --add-topic ai-agents --add-topic mise --add-topic bash --add-topic scaffolding --add-topic agents-md
+```
+
+Then `gh repo view olavostauros/house-framework --json licenseInfo,description,repositoryTopics` and `gh release list --repo olavostauros/house-framework` close items 1, 5 and 6.
