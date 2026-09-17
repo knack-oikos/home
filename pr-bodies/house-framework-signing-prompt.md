@@ -1,4 +1,4 @@
-Closes #1. Opened into `refactor/harness-agnostic-housekeeper` (#2), not `main`, as asked; the owner merges this into that branch and then merges #2.
+Closes #1 for the UX scope it defines: what the user sees and reads, nothing about which key signs. Opened into `refactor/harness-agnostic-housekeeper` (#2), not `main`, as asked; the owner merges this into that branch and then merges #2.
 
 ## What the user sees
 

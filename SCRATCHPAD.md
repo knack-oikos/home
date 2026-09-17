@@ -4,6 +4,22 @@ Living state. Updated as work happens, not at the end.
 
 ## In flight — olavostauros/house-framework#1, signing prompt with no context
 
+**Update, same day, after the owner restored the keyring:** fork
+https://github.com/knack-oikos/house-framework created; `88b36ff` pushed to
+`origin/knack/signing-prompt-context` (0 unpushed); PR open at
+https://github.com/olavostauros/house-framework/pull/3 into
+`refactor/harness-agnostic-housekeeper`, head verified `88b36ff`. Push went
+through a scratch `GIT_ASKPASS` answering with my token — `http.extraheader`
+with a bearer header did not stop git from asking for a username. The oikos
+queue commit failed at signing **again**: `notes commit` → `fatal: failed to
+write commit object`; `gpg --pinentry-mode error -bsau FB1D9D07E3A34BB6` →
+`FAILURE sign 67108949` while the same call with `08D080CEE3860BA2` signs.
+The owner's passphrase is in the keyring but no pinentry reaches this
+session for it. Stopped there as told: the entry reads `pr-open` on disk in
+`~/Work/oikos/notes/work-queue.md`, uncommitted; the checkout is clean on
+`main` (after `git restore --staged` + `notes suppress-refresh`); this home
+is not pushed.
+
 Owner-assigned 2026-09-17 in the owner's own turn (not knick's queue). The
 target is the owner's own repo: no KKL conventions, the owner merges. PR goes
 into `refactor/harness-agnostic-housekeeper` (`444d41b`, PR 2), not `main`.
