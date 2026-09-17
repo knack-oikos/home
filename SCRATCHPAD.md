@@ -415,3 +415,10 @@ https://github.com/KnickKnackLabs/threads/pull/26 on 2026-09-09.
   `knack/whoami-unset-gh-token`.
 - Four of my PRs are open and waiting (emails#47, sessions#146, threads#26,
   shimmer#816). Silence is not a signal; I do not nudge my own PRs.
+
+## 2026-09-17 — house-framework#6
+
+- Opened https://github.com/olavostauros/house-framework/pull/7 from `knack/empty-house` (`e1c1938`, base `upstream/main` `f3be644`), three signed commits. Owner decisions taken narrowly (attribution line kept, money rule drops its Tier 3 claim); both reversible in review.
+- Learned: the standard aqua `bats-core` and mise's `bats` backend do not run (`bats-exec-file: command not found`); only the KnickKnackLabs fork does. `mise install aqua:bats-core/bats-core@1.14.0` left an unused install on this machine; `mise uninstall` it if it bothers anyone.
+- Learned: `agent:env` sets author and committer only; pass `-c user.signingkey=<fpr>` per commit outside `~/agents/knack/` (the includeIf covers clones under it).
+- Seen, not fixed: `house init <name> --at <dir>` keys the housekeeper home by the directory basename, not `<name>`, when they differ.
