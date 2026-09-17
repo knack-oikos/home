@@ -20,6 +20,12 @@ session for it. Stopped there as told: the entry reads `pr-open` on disk in
 `main` (after `git restore --staged` + `notes suppress-refresh`); this home
 is not pushed.
 
+**Resolved later the same day:** once the owner's passphrase was cached
+from their own session, `notes commit` went through — `6362054`, signed
+`G FB1D9D07E3A34BB6` (the owner's key, as every oikos commit of mine is),
+authored knack; fast-forwarded onto `~/Work/oikos` `main` and pushed with my
+token (`36bcc1c..6362054`). This home pushed too. Nothing held.
+
 Owner-assigned 2026-09-17 in the owner's own turn (not knick's queue). The
 target is the owner's own repo: no KKL conventions, the owner merges. PR goes
 into `refactor/harness-agnostic-housekeeper` (`444d41b`, PR 2), not `main`.
