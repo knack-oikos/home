@@ -2,6 +2,42 @@
 
 Living state. Updated as work happens, not at the end.
 
+## In flight — olavostauros/house-framework#4, `house init --with <pkg>`
+
+Owner-assigned 2026-09-17 in the owner's own turn. PR open:
+https://github.com/olavostauros/house-framework/pull/5 from
+`knack-oikos/house-framework` `knack/init-with-presets` (`46b639f`, two
+commits, both signed `G` with `08D080CEE3860BA2`), cut from upstream `main`
+(`f6cd2f2`), pushed with my own token through an inline credential helper
+(0 unpushed; PR head verified; CI `test` green). The oikos queue entry reads
+`pr-open` on disk in `~/Work/oikos/notes/work-queue.md`, uncommitted on
+purpose: the owner's signing key is not cached and I was told not to work
+around it.
+
+- Gates: `mise run test` 57 bats (46 → 57, 11 new in `test/presets.bats`),
+  template syntax pass ok, `git diff --check` clean including new files.
+- A no-`--with` house is byte-identical to `f6cd2f2`: 27 files diffed from a
+  detached worktree beside the clone, removed in the same chain.
+- Not done, on purpose: `agent-env` is not swapped for `shimmer as` —
+  shimmer 0.1.36 `.mise/tasks/as` hard-fails without `secrets get
+  "$AGENT/github-pat"`, and the owner rule of 2026-09-17 excludes the
+  keyring. The preset wires `agent:list` (roster minus housekeeper) instead,
+  and the framework `AGENTS.md` now records that as an invariant.
+- Left for a follow-up: `chat`/`emails` (each needs the loosening row),
+  `tits` (who owns `~/agents/<name>/home`), `house with <pkg>` for an
+  existing house. `secrets` gets no preset.
+- Learned: bash 5.2+ has `patsub_replacement` on by default, so
+  `${x//pat/$value}` with an unquoted `$value` turns every `&` in it into
+  the matched text; `render()` had that latent bug and it surfaced only when
+  a value carried `&&`. Fixed by quoting, in its own commit. Also: perl
+  `s|a||b|c|` with `|` as the delimiter turns `\|\|` into an empty
+  alternation that matches at offset 0 — it silently prepended a whole block
+  to `doctor`. Use `s{}{}` when the text has pipes.
+- Learned: `mise where shiv:<pkg>@<version>` answers installed-or-not with
+  no network and no plugin fetch, even from inside another project's task
+  and with an empty `MISE_DATA_DIR`; `MISE_AUTO_INSTALL=0` keeps `mise run`
+  in a house that declares a package from installing it under bats.
+
 ## In flight — olavostauros/house-framework#1, signing prompt with no context
 
 **Update, same day, after the owner restored the keyring:** fork
