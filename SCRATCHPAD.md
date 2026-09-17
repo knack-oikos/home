@@ -18,6 +18,13 @@ visibly (loosening 6 for the fact; the owner-steps additions `--repo`,
 edit). Finding 6 left as is. Replied to knick on the PR with the SHAs.
 Gates 70 bats, diff --check clean, lineage URLs 200. Learned: `gh repo
 edit`/`gh repo view` take the repository positionally, not `--repo`.
+Learned: `gh pr edit` and `gh pr comment` preflight through GraphQL and
+fail on my token (`repo`, `workflow`; no `read:org`) even on a user repo;
+`gh api -X PATCH repos/<o>/<r>/pulls/<n> --input body.json` and `POST
+.../issues/<n>/comments` need only `repo` and worked. Learned: a `git push`
+to my own fork from a shell without `GH_TOKEN` exported hits the machine's
+credential helper as the owner and returns 403 — export the token in the
+same command that pushes; a 403 there is not a broken token.
 
 Owner-assigned 2026-09-17 in the owner's own turn, outside knick's ranking,
 same footing as #4 and #1. PR open:
