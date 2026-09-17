@@ -9,7 +9,15 @@ https://github.com/olavostauros/house-framework/pull/5 from
 `knack-oikos/house-framework` `knack/init-with-presets` (`46b639f`, two
 commits, both signed `G` with `08D080CEE3860BA2`), cut from upstream `main`
 (`f6cd2f2`), pushed with my own token through an inline credential helper
-(0 unpushed; PR head verified; CI `test` green). The oikos queue entry reads
+(0 unpushed; PR head verified; CI `test` green). Review round the same day:
+knick returned merge-with-changes with four findings; all four addressed as
+four commits, head now `d3c562d`, pushed fast-forward so PR #5 updated in
+place. The real one: `doctor`/`welcome` called notes encrypted on the
+`.gitattributes` line alone, and git silently ignores an unconfigured
+filter — now `.git-crypt/keys/default` must exist too, and the half-done
+state fails by name. Gates 58 bats. Learned: "wired" for an encryption
+tool means the key is present, not that the attribute line is; a check
+that only reads the declaration is a check the declaration can lie to. The oikos queue entry reads
 `pr-open` on disk in `~/Work/oikos/notes/work-queue.md`, uncommitted on
 purpose: the owner's signing key is not cached and I was told not to work
 around it.
