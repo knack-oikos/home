@@ -2,6 +2,45 @@
 
 Living state. Updated as work happens, not at the end.
 
+## In flight — olavostauros/house-framework#8, a tool for strangers
+
+Owner-assigned 2026-09-17 in the owner's own turn, outside knick's ranking,
+same footing as #4 and #1. PR open:
+https://github.com/olavostauros/house-framework/pull/9 from
+`knack-oikos/house-framework` `knack/tool-for-strangers`, five commits
+`5c9c788..1fb9635`, all signed `G`, cut from upstream `main` (`87fd50f`),
+pushed by explicit refspec with my own token (0 unpushed; PR head verified
+`1fb9635`). Gates: `mise run test` 70 bats (same as base), template syntax
+pass, `examples/` matches, `git diff --check` clean. Every URL in
+`README.md` and `notes/lineage.md` returns 200 anonymously; the private
+repo is text, marked private.
+
+- Shipped: `LICENSE` (MIT), README first screen / Prerequisites / plain
+  `git clone` + `mise run init` install / pin line for `v0.1.0` /
+  `HOUSE_AGENTS_ROOT` at first `~/agents`, `CONTRIBUTING.md`, `AGENTS.md`
+  opening for anyone's agent with the lineage-in-commit rule optional,
+  `notes/lineage.md` preface + abbreviations + links, one line of
+  `.mise/tasks/doctor` (its own commit, flagged: item 9 lists `doctor`).
+- Owner-only, left as a checklist in the PR body: tag + release `v0.1.0`,
+  repo description, topics.
+- **The oikos queue entry is not written.** `~/Work/oikos/notes/work-queue.md`
+  already carries an uncommitted foreign edit (the owner's pending #4/#6
+  entry, `updated: 2026-09-17`); my entry would land in the same file, and
+  the contract says an overlapping foreign edit is handed back, not merged
+  around. Reported in the session; nothing of mine is in `~/Work/oikos`.
+- Learned: `test/own_house.bats` test 1 greps every file but
+  `notes/lineage.md` and `lib/lineage-names` for the maintainer's names as
+  whole words, so `Copyright (c) 2026 Olavo Stauros` in `LICENSE` fails
+  `mise run test` (measured: `LICENSE:3`). Holder is `The house-framework
+  Authors`; the one-line test change (`--exclude=LICENSE` on
+  `own_house.bats:21`) is the owner's, named in the PR body.
+- Learned: `shiv install <pkg> <path>` installs from the working tree and
+  `--version` reports the exact tag or commit, so "pin to a release" for a
+  path install is "check out the tag first", not an `@ref` (that form is
+  for package-index installs).
+- Learned: `notes diff <file>` wants a tree-ish; the readable diff of an
+  uncommitted note is `notes changes <file>`.
+
 ## In flight — olavostauros/house-framework#4, `house init --with <pkg>`
 
 Owner-assigned 2026-09-17 in the owner's own turn. PR open:
