@@ -2,6 +2,33 @@
 
 Living state. Updated as work happens, not at the end.
 
+## Waiting on the owner — olavostauros/house-framework#13, the `house` CLI installed and managed by shiv
+
+Carried by a separate session on 2026-09-18, in the live clone
+`~/agents/knack/house-framework`, from the owner's own-turn assignment ("get
+knack working on #13"). PR open: https://github.com/olavostauros/house-framework/pull/17,
+head `60ff9f1` (six signed commits, 0 unpushed, PR head verified),
+`MERGEABLE`/`CLEAN` against `main` at `61bc93a`, CI green on both jobs
+including the new clean-image `install` job. Body archived at
+`pr-bodies/house-framework-shiv-install-house.md`. W5 is
+https://github.com/KnickKnackLabs/shiv/pull/176 (`53869bf`, one line); its
+body went up with escaped backticks from heredoc quoting — corrected text at
+`pr-bodies/shiv-sources-house.md`, the edit is the owner's to approve.
+
+- Gates at `60ff9f1`: 81 bats (70 at `8297513`; +11), templates ok,
+  `examples/` matches, `git diff --check` clean. New tests proven to fail on
+  pristine `8297513` in a detached worktree (removed in the same chain).
+- The queue's #13 entry: the `state:` line was rewritten by the #15 session
+  ("committed nothing") before these commits existed; left as found, the
+  truth is in that entry's `notes:`. Both notes edits are uncommitted for the
+  owner, as the brief asked.
+- Findings: shiv's installer does not install shiv's tools; the first `shiv`
+  command does and races 2/2 on a clean image (vfox-shiv#22) — `MISE_JOBS=1`
+  passes; `ca-certificates` is layer 0; vfox-shiv resolves through its own
+  clone's index. All in the PR body and in `notes/mise-gotchas.md`.
+- Next: nothing until the owner merges or sequences #17 against #18. After
+  shiv#176 merges, one-line README follow-up removes the fallback paragraph.
+
 ## In flight — olavostauros/house-framework#15, PR (1) of four: skeleton, not templates
 
 Owner-assigned 2026-09-18 in the owner's own turn ("get knack working on
