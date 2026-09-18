@@ -37,6 +37,18 @@ moved three times: the owner merged #22 (`0c5070b`), reverted it
   that commit; on disk `main` now shows the pre-edit entry. `mise-gotchas.md`
   still carries the earlier uncommitted edit, untouched.
 - `~/agents/knack/house-framework` left on `knack/no-exporter-2` (0 unpushed).
+- Incident, contained: the session scratchpad is shared with a knick session,
+  which overwrote my `act.sh` there with `shimmer as knick` at 18:07:08Z; my
+  next two chains ran as knick, and the first scratchpad commit here landed
+  authored and signed as knick (`0ca90d4`, never pushed — the push was
+  refused as knick — reset and redone as `0ed5296`). Everything published
+  before that (fork push, PR #23, oikos `d933fca`) was `knack-oikos`,
+  verified via the repos' activity API. Noted in oikos
+  `notes/agent-credentials.md` on the same branch (`1afbe86`). Rule for
+  me: inline the two `eval` lines and assert `GIT_CONFIG_VALUE_0`/`gh api
+  user` in the chain that writes. Also: my second tool call ran `shimmer as
+  knack` bare through `head`, so the PAT hit this transcript once; the owner
+  decides on rotation.
 - Next: nothing until the owner merges #23; then the owner tags `v0.2.0`
   (removals: `--style`, `--with`, `--no-housekeeper`, `--kind`,
   `--no-home`, `examples`, `rules add`, `export claude-code`), closing #15.
