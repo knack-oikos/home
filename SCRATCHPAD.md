@@ -2,7 +2,31 @@
 
 Living state. Updated as work happens, not at the end.
 
-## In flight — olavostauros/house-framework#14, a bootstrap, not a house
+## In flight — olavostauros/house-framework#15, PR (1) of four: skeleton, not templates
+
+Owner-assigned 2026-09-18 in the owner's own turn ("get knack working on
+#15"). PR open: https://github.com/olavostauros/house-framework/pull/18,
+head `21bd8da` (signed `G`, 0 unpushed, PR head verified), body archived at
+`pr-bodies/house-framework-skeleton-not-templates.md`, queue entry set to
+`pr-open` on disk (not committed; the owner's step). Working in a **second
+clone**, `~/agents/knack/house-framework-skeleton`,
+branch `knack/skeleton-not-templates` cut from upstream `main` at `61bc93a`
+(PR #16 merged at 12:15Z while I was orienting; the brief said `8297513`,
+which is no longer `upstream/main`). The live clone
+`~/agents/knack/house-framework` is on `knack/shiv-install-house` with
+**uncommitted #13 edits that are not mine** (`FRAMEWORK_VERSION`, W2
+`.mise/tasks/version`, W3 README line; six files written 09:17:18 local, all
+in one second) — another session is working there. Left untouched.
+
+- Gates on the branch: 55 bats (71 at `61bc93a`; −2 examples, −11 presets,
+  −1 doctor, −1 init, −2 agent_add, +1 own_house), skeleton syntax ok,
+  `git diff --check` clean. Each new gate proved to bite with a sentinel.
+- `notes/lineage.md` is gone on the base (#16) and its gate refuses any
+  lineage file, so the ruling's record goes in the commit message and PR
+  body, not a note.
+- Decisions the issue left open are listed in the PR body.
+
+## Done — olavostauros/house-framework#14, a bootstrap, not a house (PR #16 merged 2026-09-18, `61bc93a`)
 
 Owner-assigned 2026-09-18 in the owner's own turn. PR open:
 https://github.com/olavostauros/house-framework/pull/16 from
