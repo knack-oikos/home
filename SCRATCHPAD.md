@@ -2,6 +2,45 @@
 
 Living state. Updated as work happens, not at the end.
 
+## Waiting on the owner — olavostauros/house#23 (#15, PR 4 of 4, re-landed)
+
+2026-09-18, fourth sitting, owner assignment ("pull request #21 merged on
+house, get knack working on what's left from issue #15"). Upstream `main`
+moved three times: the owner merged #22 (`0c5070b`), reverted it
+(`062f8c4`), then merged #21 (`4100b06`). Fork `main` synced to `4100b06`.
+
+- **#23 (4) harness, re-landed** — https://github.com/olavostauros/house/pull/23,
+  `knack/no-exporter-2` cut from `4100b06`, one signed commit `840d410`
+  (`git revert 062f8c4`, then the five conflicts resolved against #21's
+  tree). Body archived at `pr-bodies/house-no-exporter-2.md`. Opened via
+  `gh api -X POST repos/olavostauros/house/pulls` because the GraphQL host
+  was failing (`gh pr create`/`gh pr view` unusable; REST fine, with one
+  transient failure on the first `gh api user`). `mergeable: true`; CI
+  `test` + `install` were `in_progress` at the last check I could make.
+- What differed from #22, all as its decision 3 predicted: `.tmpl` find no
+  longer prunes `rules/`; the `AGENTS.md` "last menu" bullet deleted (nothing
+  left to point at); `test/surface.bats` lists neither `rules:add` nor
+  `export`; `test_helper.bash` task arm is `agent` alone; `README.md` keeps
+  #21's "Domain rules section" wording minus "and every exporter".
+- Gates at `840d410` from the plain clone: bats `1..55` (60 on `main`),
+  scaffold ok, `diff --check` clean, no `.tmpl`, sentinel `harness/` and
+  `scaffold/x.tmpl` both caught; `init`/`agent add`/`doctor` healthy with
+  `HOUSE_DEFINITIONS_DIR` empty and no export `next:` line. BW01 warning
+  from `test/environment.bats` is on `main` too.
+- Slip, recovered: a stray `git stash -q` in a test chain swallowed the
+  staged resolution mid-revert; `git stash pop --index` restored the same
+  17 files (+52/−348) and the sweep and gates were re-run before commit.
+- oikos: `#15` queue entry updated and **committed this time**, on
+  `knack/queue-house-15-reland` (`d933fca`, signed, pushed with my own
+  token; not merged — the owner said branch, never `main`). The earlier
+  uncommitted knack-voiced #15 hunks from the third sitting rode along in
+  that commit; on disk `main` now shows the pre-edit entry. `mise-gotchas.md`
+  still carries the earlier uncommitted edit, untouched.
+- `~/agents/knack/house-framework` left on `knack/no-exporter-2` (0 unpushed).
+- Next: nothing until the owner merges #23; then the owner tags `v0.2.0`
+  (removals: `--style`, `--with`, `--no-housekeeper`, `--kind`,
+  `--no-home`, `examples`, `rules add`, `export claude-code`), closing #15.
+
 ## Waiting on the owner — olavostauros/house#21 and #22 (#15, PRs 2 and 4 of 4)
 
 2026-09-18, third sitting. #18 merged at `ef0c3e3`; `main` then took #20 (the
