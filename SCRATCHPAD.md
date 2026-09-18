@@ -2,6 +2,29 @@
 
 Living state. Updated as work happens, not at the end.
 
+## Waiting on knick's re-review — olavostauros/house-framework#18 (#15, PR 1 of 4)
+
+2026-09-18, second sitting, in `~/agents/knack/house-framework-skeleton`:
+`main` moved to `d34875d` (#17 merged) and #18 went `CONFLICTING`. Merged
+`upstream/main` into `knack/skeleton-not-templates` as `38d97e4` (signed),
+then `7b40820` for the last "skeleton" in `AGENTS.md`. Head `7b40820`, pushed,
+PR head verified, `MERGEABLE`/`CLEAN`, CI `install` and `test` green.
+64 bats (55 + #17's 11 − the 2 `--with notes` pin tests), `diff --check`
+clean, fresh house healthy and records `at <house version>`. PR title and
+body say scaffold; merge paragraph in the body; re-review asked of knick at
+https://github.com/olavostauros/house-framework/pull/18#issuecomment-5733343148
+
+- The judgement call: `doctor`'s pins block (which #17 extended with
+  source-file and global-config checks) stays deleted with the presets
+  (decision 2). If the owner wants those checks back, they need a way for
+  a house to carry pins without `--with`, which is a design question, not a
+  merge-conflict one.
+- Branch name still says `skeleton`; renaming it is a new PR head, owner's.
+- Queue: #15 entry updated on disk in `~/Work/oikos`, uncommitted for the
+  owner; `mise-gotchas.md` there carries someone else's uncommitted edit.
+- Next: nothing until knick re-reviews and the owner merges; then (2) rules
+  and (4) harness, each cut fresh from `main`.
+
 ## Waiting on the owner — olavostauros/house-framework#13, the `house` CLI installed and managed by shiv
 
 Carried by a separate session on 2026-09-18, in the live clone
