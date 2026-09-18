@@ -2,6 +2,50 @@
 
 Living state. Updated as work happens, not at the end.
 
+## Waiting on the owner — olavostauros/house#21 and #22 (#15, PRs 2 and 4 of 4)
+
+2026-09-18, third sitting. #18 merged at `ef0c3e3`; `main` then took #20 (the
+in-tree rename to `house`) and sits at `adf7622`; the owner has since renamed
+the GitHub repo to `olavostauros/house` (the fork is still
+`knack-oikos/house-framework`; redirects work; nothing renamed by me). Fork
+`main` synced to `adf7622` with `gh repo sync`.
+
+- **#21 (2) rules** — https://github.com/olavostauros/house/pull/21,
+  `knack/no-rules-menu`, one signed commit `8891802` from `adf7622`. Deletes
+  `rules/`, `rules add`, `test/rules_add.bats`, the `house:rules` marker
+  (two remain), `render_string`. bats 64 → 60. CI `test` + `install` green.
+- **#22 (4) harness** — https://github.com/olavostauros/house/pull/22,
+  `knack/no-exporter`, one signed commit `8718bba` from `adf7622`. Deletes
+  `harness/`, `export claude-code`, `test/export.bats`, both `next: house
+  export` lines, `capitalize`; the runner name moves into
+  `lib/lineage-names` as a `runner` line and `test/agent_add.bats` reads it
+  there; repo-wide `.tmpl` find prunes `rules/` until #21 lands. bats
+  64 → 59. CI green.
+- They conflict textually in `AGENTS.md`, `README.md`, `test/own_house.bats`,
+  `test/surface.bats`, `test/test_helper.bash` (measured by trial merge; every
+  resolution is "both deletions"). Whichever merges second: merge `main` in
+  with a merge commit as #18 did, and in #22's case drop the `rules/` prune
+  from the `.tmpl` find.
+- Worktrees `house-framework-rules` and `house-framework-harness` were removed
+  after the pushes; both branches live in `~/agents/knack/house-framework`
+  and on the fork. `~/agents/knack/house-framework-skeleton` is a separate
+  full clone parked at `7b40820` (merged); left in place, not mine to delete
+  without asking.
+- Learned, filed in oikos `notes/git-worktrees.md` (`09ffedd`, pushed): a
+  worktree's `.git` is a file, so `--exclude-dir=.git` greps read its
+  `gitdir:` path and `test/own_house.bats:16` fails in any worktree. Gates
+  were verified from plain clones. One-word fix (`--exclude=.git`) left out of
+  scope, not upstream.
+- oikos: `notes/work-queue.md` #15 entry extended on disk (state, PR links,
+  conflict note), uncommitted for the owner as before; `mise-gotchas.md`
+  still carries someone else's uncommitted edit. `.modules/manifest` is a
+  zero-byte file on disk (committed 22 bytes, since 2026-09-16,
+  assume-unchanged) and makes every non-ff `git merge` in `~/Work/oikos` die
+  with `stash failed` under git 2.55; the note landed by fast-forward. Not
+  mine to fix; reported.
+- Next: nothing until the owner merges one; then the merge-of-main on the
+  other, then the owner tags `v0.2.0` and closes #15.
+
 ## Waiting on knick's re-review — olavostauros/house-framework#18 (#15, PR 1 of 4)
 
 2026-09-18, second sitting, in `~/agents/knack/house-framework-skeleton`:
