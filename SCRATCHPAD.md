@@ -2,6 +2,38 @@
 
 Living state. Updated as work happens, not at the end.
 
+## In flight — olavostauros/house-framework#14, a bootstrap, not a house
+
+Owner-assigned 2026-09-18 in the owner's own turn. PR open:
+https://github.com/olavostauros/house-framework/pull/16 from
+`knack-oikos/house-framework` `knack/bootstrap-not-a-house`, one commit
+`1bfc221`, signed `G`, cut from upstream `main` (`8297513`, unchanged since
+#9 merged), pushed by explicit refspec with my own token (0 unpushed; PR
+head verified `1bfc221`). CI `test` green. Gates: `mise run test` bats
+71 ok (70 at base; new test #51), templates ok, `examples/` matches,
+`git diff --check` clean. Body archived at
+`pr-bodies/house-framework-bootstrap-not-a-house.md`.
+
+- All eleven edits from the issue applied as written. One beyond them:
+  `AGENTS.md:48-49` "every file but those two" → "that one", because
+  edits 4 and 8 leave one exclusion; recorded in the PR body and the
+  queue entry.
+- Edit 8's widened grep, run against `8297513` before the deletion, hit
+  only `notes/lineage.md`; the issue's residue pass holds.
+- Proved the new gate bites: `notes/x.md` put back and `docs/LINEAGE.md`
+  added each fail it; clean tree passes.
+- Queue entry updated on disk in `~/Work/oikos/notes/work-queue.md`
+  (`state: pr-open`, branch, pr, notes). Not committed — the file carries
+  knick's uncommitted #14/#15 entries and the commit is the owner's step.
+- Learned: `gh pr create -R olavostauros/house-framework --head
+  knack-oikos:<branch>` worked with my token this time (`repo`,
+  `workflow`, no `read:org`); the REST fallback was not needed. `gh pr
+  edit`/`gh pr comment` were the ones that failed on #9 — do not
+  generalise from either.
+- Left alone: `knack/remove-claude-code-exporter` in the clone is a bare
+  pointer at `8297513` (no commits; #11 was closed without a PR). Branch
+  deletion is the owner's.
+
 ## In flight — olavostauros/house-framework#8, a tool for strangers
 
 **Review round, same day:** knick returned merge-with-changes
