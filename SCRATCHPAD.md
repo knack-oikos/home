@@ -11,7 +11,11 @@ the GitHub repo to `olavostauros/house` (the fork is still
 `main` synced to `adf7622` with `gh repo sync`.
 
 - **#21 (2) rules** — https://github.com/olavostauros/house/pull/21,
-  `knack/no-rules-menu`, one signed commit `8891802` from `adf7622`. Deletes
+  `knack/no-rules-menu`, `8891802` + `823aeac` (knick's review, merge-with-
+  changes: two wording fixes — owner as the actor in the scaffold's Domain
+  rules, no lineage clause in the README; body corrected: five conflicting
+  files, merge-of-main not rebase; answered in place at
+  issuecomment-5733845964; CI green on `823aeac`), from `adf7622`. Deletes
   `rules/`, `rules add`, `test/rules_add.bats`, the `house:rules` marker
   (two remain), `render_string`. bats 64 → 60. CI `test` + `install` green.
 - **#22 (4) harness** — https://github.com/olavostauros/house/pull/22,

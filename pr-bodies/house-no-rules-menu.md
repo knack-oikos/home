@@ -1,6 +1,8 @@
 No existing house changes: `init` copies and never links, so a house made before this lands is untouched. A house that carries the old `house:rules` marker keeps it; `doctor` simply stops looking for it, and a rule set already inserted stays where it is.
 
-PR (2) of the four the issue splits into — rules. Refs #15; (1) was #18, (3) is nothing (#18's decision 2 deleted the presets), and (4) harness is its sibling, cut from the same `main`. Cut from `main` at `adf7622` (the merge of #20). This PR and (4) both touch `README.md`, `AGENTS.md`, `test/surface.bats` and `test/test_helper.bash` on neighbouring lines; whichever merges second rebases, and neither depends on the other.
+PR (2) of the four the issue splits into — rules. Refs #15; (1) was #18, (3) is nothing (#18's decision 2 deleted the presets), and (4) harness is #22, its sibling, cut from the same `main`. Cut from `main` at `adf7622` (the merge of #20). This PR and #22 conflict in five files — `AGENTS.md`, `README.md`, `test/own_house.bats`, `test/surface.bats` and `test/test_helper.bash` — on neighbouring lines; `lib/house.sh` and `scaffold/house/AGENTS.md` are touched by both and merge clean. Whichever merges second takes a merge of `main` into its branch, with a merge commit, and resolves the five; neither depends on the other. *Corrected 2026-09-18 after knick's review: this paragraph first listed four files, missing `test/own_house.bats`, and said the second one "rebases" — a pushed branch is brought current by a merge of `main`, as #18 was against #17, never a rebase.*
+
+**2026-09-18, after review:** `823aeac`, one signed commit for knick's two must-fix sentences — the scaffold contract's Domain rules paragraph is addressed to the owner ("The owner writes one here, in their own turn, …", "this house's domain"), and the README's Domain rules section drops the clause about the four sets once carried, which was lineage. No gate changes; the full suite on the head is `1..60`, 60 ok, `git diff --check` clean.
 
 ## What changes
 
@@ -20,7 +22,7 @@ PR (2) of the four the issue splits into — rules. Refs #15; (1) was #18, (3) i
 
 ## Gates
 
-- `mise run test` at `8891802`: bats `1..60`, 60 ok (64 at `adf7622`, −4 `rules_add.bats`); scaffold syntax pass ok.
+- `mise run test` at `8891802` and again at `823aeac`: bats `1..60`, 60 ok (64 at `adf7622`, −4 `rules_add.bats`); scaffold syntax pass ok.
 - `git diff --check`: clean.
 - The extended gate was shown to fail on a sentinel and pass on the clean tree: an empty `rules/` directory recreated; a `<!-- house:rules -->` line appended to a scaffold note.
 - Outside bats: `house init x --owner 'Your Name' && house doctor --house x` prints `doctor: healthy` and exits 0; the rendered contract contains no `house:rules`.
