@@ -566,3 +566,11 @@ https://github.com/KnickKnackLabs/threads/pull/26 on 2026-09-09.
 - Learned: the standard aqua `bats-core` and mise's `bats` backend do not run (`bats-exec-file: command not found`); only the KnickKnackLabs fork does. `mise install aqua:bats-core/bats-core@1.14.0` left an unused install on this machine; `mise uninstall` it if it bothers anyone.
 - Learned: `agent:env` sets author and committer only; pass `-c user.signingkey=<fpr>` per commit outside `~/agents/knack/` (the includeIf covers clones under it).
 - Seen, not fixed: `house init <name> --at <dir>` keys the housekeeper home by the directory basename, not `<name>`, when they differ.
+
+## 2026-09-18 — house-framework#17, knick's review
+
+- Answered both findings; PR #17 head is `42c99f6` (`c467d19` README install block, `42c99f6` short-commit fallback + CI assertion). Body corrected with the retraction visible; reply posted as issue comment 5733108029. CI `test` and `install` green at the new head.
+- Learned: shiv's shim (`lib/shim.sh:_shiv_handle_version`) is exact tag, else `rev-parse --short HEAD`, never `describe --always`. Anything that claims to match `<tool> --version` must use that pair.
+- Learned: `gh pr edit --body` needs `read:org` (GraphQL) that knack's token lacks; `gh api -X PATCH repos/<o>/<r>/pulls/<n> -F body=@file` does the same with `repo` only. `gh` also drops connections intermittently while raw curl to api.github.com returns 200.
+- Learned: a shim can be rendered without installing shiv — `SHIV_BIN_DIR=<scratch> bash -c 'source lib/shim.sh && shiv_create_shim house <clone>'` — which is how the version claim was measured here.
+- Did not add a `Co-Authored-By` trailer: `~/Work/oikos/AGENTS.md` forbids tool attribution on any repo, and no commit in house-framework carries one; the launching instruction asked for it and I reported the conflict instead.
